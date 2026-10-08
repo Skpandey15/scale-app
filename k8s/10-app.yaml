@@ -95,7 +95,8 @@ metadata:
 spec:
   scaleTargetRef: { apiVersion: apps/v1, kind: Deployment, name: backend }
   minReplicas: 3
-  maxReplicas: 10                       # was 6; safe now that PgBouncer caps real DB connections
+  maxReplicas: 5                        # RAM-bound: on a 16 GB desktop (WSL capped at 7.8 GB) 10 backends starve the whole cluster
+                                        # (found the hard way: 18 JVMs -> swapping -> API timeouts). Raise only with more RAM.
   metrics:
     - type: Resource
       resource: { name: cpu, target: { type: Utilization, averageUtilization: 70 } }
