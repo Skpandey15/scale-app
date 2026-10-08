@@ -38,7 +38,7 @@ bash ops/catalog-drill.sh all      # security, entity resolution, idempotency, G
 bash ops/catalog-perf.sh           # rough read throughput + pod-kill test
 ```
 
-## Measured (one laptop, all components share it)
+## Measured (one desktop PC, all components share it)
 
 | Drill | Result |
 |---|---|

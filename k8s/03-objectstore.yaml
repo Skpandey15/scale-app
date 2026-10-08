@@ -1,6 +1,6 @@
 # S3-compatible object store (SeaweedFS) for Postgres base backups + WAL. MinIO's public images were withdrawn.
 # In a real deployment point barmanObjectStore at cloud object storage in another zone/region; this one shares
-# the cluster's failure domain, so ops/offsite-backup.sh copies backups out to the host disk.
+# the cluster's failure domain, so ops/offsite-backup.sh copies backups out to a host folder (use a separate physical drive).
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

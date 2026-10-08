@@ -1,6 +1,6 @@
 # Performance & scalability report
 
-Environment: laptop, WSL2 (7.8 GB), k3d 1 server + 2 agents, JMeter 5.5 (3 CPUs / 1 GB heap) on the same machine. Numbers show mechanisms and relative scaling, not production capacity.
+Environment: desktop PC (Dell Inspiron 3910, i5-12400, 16 GB RAM), WSL2 (7.8 GB), k3d 1 server + 2 agents, JMeter 5.5 (3 CPUs / 1 GB heap) on the same machine. Numbers show mechanisms and relative scaling, not production capacity.
 
 ## 1. Client-side (JMeter, steady state after ramp-up)
 
@@ -52,5 +52,5 @@ Efficiency = throughput gain / user gain. 100% is linear scaling; a drop marks w
 - Peak sustained throughput: **2669 req/s** (ha-stress-100).
 - First phase showing degradation (errors > 1% or p95 > 3x baseline and > 100 ms): **none in the tested range**.
 - Phases with a node above 85% CPU (saturation): none.
-- Note: JMeter shares the machine with the cluster, so the highest phases may be limited by the load generator and the laptop, not the application.
+- Note: JMeter shares the machine with the cluster, so the highest phases may be limited by the load generator and the desktop, not the application.
 - `kubectl top` (metrics-server) has ~15-30 s resolution, so short CPU spikes are smoothed; counters (Postgres, Redis, JVM) are exact deltas.

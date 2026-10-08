@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copy Postgres backups + WAL out of the cluster to a host directory (default: ~/scale-app-offsite-backups;
-# override with the first argument or SCALE_OFFSITE_DIR, e.g. /mnt/d/scale-app-offsite-backups to land on a Windows drive).
+# override with the first argument or SCALE_OFFSITE_DIR, e.g. /mnt/e/backups for an external Windows drive; a second partition of the same SSD does not protect against drive failure).
 # Run it on a schedule (e.g. Windows Task Scheduler: wsl -d Ubuntu-24.04 -- bash <this file>).
 set -eu
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"

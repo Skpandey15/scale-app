@@ -1,7 +1,7 @@
 # Scale App: architecture, resilience and operations
 
 A read-heavy microblog (React + Spring Boot) built to demonstrate scalability, availability and recoverability on a
-local k3d cluster (1 server + 2 agents). Everything below was exercised by the drills in `ops/`; numbers are from one laptop.
+local k3d cluster (1 server + 2 agents). Everything below was exercised by the drills in `ops/`; numbers are from one desktop PC (Dell Inspiron 3910, 6-core i5-12400, 16 GB RAM, one NVMe SSD).
 
 ## Request path
 ```
@@ -10,7 +10,7 @@ Browser -> Traefik (2 replicas) -> backend pods (3..10, stateless, JWT)
                                       |- PgBouncer x2 -> Postgres primary (+ streaming replica, auto-failover)
                                       '- Kafka x3      post-created events (transactional outbox), DLT
 Batch:  CronJob daily-stats (same image, chunked + checkpointed)
-Backup: continuous WAL + daily base backups -> object store (SeaweedFS) -> copied off-cluster to the host disk
+Backup: continuous WAL + daily base backups -> object store (SeaweedFS) -> copied off-cluster to a host folder
 ```
 
 ## What each concern uses
@@ -44,10 +44,10 @@ writes buffered in Kafka and applied on recovery, none lost). Mongo is single-no
 
 ## Known limits (be upfront about these)
 
-* One laptop: three "nodes" share the same CPU, RAM and disk; the cluster's failure domain is the machine.
+* One desktop PC: three "nodes" share the same CPU, RAM and disk; the cluster's failure domain is the machine.
 * Redis is a single instance **by design**: it is only a cache/limiter and the app fails open (verified).
 * Postgres replication is asynchronous: a failover could lose the last few unreplicated commits (none lost in the drills).
-* Backups: the off-cluster copy goes to a local disk, not another region; run `ops/offsite-backup.sh` on a schedule.
+* Backups: the off-cluster copy is a host folder. On a single-SSD PC (C: and D: are partitions of the SAME drive) it survives losing the cluster or WSL but NOT a drive failure; point `SCALE_OFFSITE_DIR` at an external or network drive and run `ops/offsite-backup.sh` on a schedule.
 * CloudNativePG's native Barman backup integration is deprecated and removed in 1.31: stay on 1.30.x or migrate to the
   Barman Cloud plugin (needs cert-manager) before upgrading.
 * In this k3d setup the ingress path hides the real client IP (the app sees rotating internal hop addresses), so per-IP limits
@@ -62,7 +62,7 @@ bash ops/ha-drill.sh [failover|pooler|kafka|pitr|all]
 bash ops/chaos.sh                  # load + pod/node/Redis/Kafka/ingress failures
 bash ops/dlq-replay-drill.sh       # outbox, dead-letter queue, replay
 bash ops/batch-drill.sh            # restartable batch job
-bash ops/offsite-backup.sh         # copy backups to D:\scale-app-offsite-backups
+bash ops/offsite-backup.sh         # copy backups to a host folder (default ~/scale-app-offsite-backups)
 bash ops/perf-suite.sh && python3 ops/analyze.py /tmp/perf .   # JMeter scalability suite + server-side metrics
 kubectl -n scale get secret kafka-ui-auth -o jsonpath='{.data.password}' | base64 -d   # Kafka UI password (user: admin)
 ```

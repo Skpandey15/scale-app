@@ -2,7 +2,7 @@
 """Mirror the pg-backups bucket (base backups + WAL) from the in-cluster object store to a host directory.
 
 Why: the object store runs inside the same cluster as the database, so losing the cluster would lose the backups too.
-This copies them to a different disk. Incremental: files already present with the same size are skipped.
+This copies them out of the cluster to a host folder. Use a DIFFERENT physical drive (external or network) to survive a drive failure: a second partition of the same SSD does not. Incremental: files already present with the same size are skipped.
 
 Usage: offsite-backup.py <dest dir> [filer url]   (needs `kubectl -n scale port-forward svc/seaweedfs 8888:8888`;
 ops/offsite-backup.sh does that for you)

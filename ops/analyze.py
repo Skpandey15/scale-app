@@ -183,7 +183,7 @@ def server(n):
 L = []
 P = L.append
 P("# Performance & scalability report\n")
-P("Environment: laptop, WSL2 (7.8 GB), k3d 1 server + 2 agents, JMeter 5.5 (3 CPUs / 1 GB heap) on the same machine. "
+P("Environment: desktop PC (Dell Inspiron 3910, i5-12400, 16 GB RAM), WSL2 (7.8 GB), k3d 1 server + 2 agents, JMeter 5.5 (3 CPUs / 1 GB heap) on the same machine. "
   "Numbers show mechanisms and relative scaling, not production capacity.\n")
 
 P("## 1. Client-side (JMeter, steady state after ramp-up)\n")
@@ -261,7 +261,7 @@ if S:
     P(f"- First phase showing degradation (errors > 1% or p95 > 3x baseline and > 100 ms): **{knee or 'none in the tested range'}**.")
     sat = [n for n in order if SV.get(n) and SV[n].get("node_cpu_max", 0) > 85]
     P(f"- Phases with a node above 85% CPU (saturation): {', '.join(sat) if sat else 'none'}.")
-    P("- Note: JMeter shares the machine with the cluster, so the highest phases may be limited by the load generator and the laptop, not the application.")
+    P("- Note: JMeter shares the machine with the cluster, so the highest phases may be limited by the load generator and the desktop, not the application.")
 P("- `kubectl top` (metrics-server) has ~15-30 s resolution, so short CPU spikes are smoothed; counters (Postgres, Redis, JVM) are exact deltas.")
 
 text = "\n".join(L)

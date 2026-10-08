@@ -1,7 +1,7 @@
 # Performance findings (JMeter suite, two identical runs)
 
 Raw tables: `PERF_REPORT.md` (second run). Raw samples: `perf-raw/`. JMeter HTML dashboards: `jmeter-<phase>/report/index.html`.
-Environment: one laptop (12 logical CPUs, WSL2 7.8 GB), k3d 1 server + 2 agents, JMeter on the same machine. Treat as relative scaling, not production capacity.
+Environment: one desktop PC (i5-12400: 6 cores / 12 threads, 16 GB RAM, WSL2 capped at 7.8 GB), k3d 1 server + 2 agents, JMeter on the same machine. Treat as relative scaling, not production capacity.
 
 ## Headline numbers (steady state)
 
@@ -74,8 +74,8 @@ Since PgBouncer now caps real DB connections, raising the pool to ~20 is safe if
 
 ## Probable limiting resource at peak (inferred, not directly measured)
 
-Total CPU demand at peak is about 6 cores (backend) + ~2.6 (JMeter) + Postgres/Redis/Kafka on a 12-logical-CPU laptop that also runs Windows.
-Host-level CPU was not sampled, so "the laptop CPU" is an inference from those figures.
+Total CPU demand at peak is about 6 cores (backend) + ~2.6 (JMeter) + Postgres/Redis/Kafka on a 12-logical-CPU desktop that also runs Windows.
+Host-level CPU was not sampled, so "the desktop CPU" is an inference from those figures.
 
 ## Caveats
 
