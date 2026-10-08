@@ -1,0 +1,41 @@
+# Namespace + Redis. Postgres lives in 02-postgres.yaml (CloudNativePG), Kafka in 01-kafka.yaml.
+# Secrets are NOT in this repo: ops/gen-secrets.sh creates them with random values.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: scale
+---
+# Redis is a disposable cache + rate-limit store. The app fails open when it is down (verified in the chaos
+# drill: 0 failed requests), so it is deliberately a single instance rather than Sentinel/Cluster.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: scale
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: redis }
+  template:
+    metadata:
+      labels: { app: redis }
+    spec:
+      containers:
+        - name: redis
+          image: redis:7-alpine
+          args: ["--maxmemory", "128mb", "--maxmemory-policy", "allkeys-lru"]
+          ports: [{ containerPort: 6379 }]
+          readinessProbe:
+            exec: { command: ["redis-cli", "ping"] }
+          resources:
+            requests: { cpu: 50m, memory: 64Mi }
+            limits: { memory: 192Mi }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: scale
+spec:
+  selector: { app: redis }
+  ports: [{ port: 6379 }]

@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-ui
+  namespace: scale
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: kafka-ui }
+  template:
+    metadata:
+      labels: { app: kafka-ui }
+    spec:
+      enableServiceLinks: false
+      containers:
+        - name: kafka-ui
+          image: provectuslabs/kafka-ui:v0.7.2
+          ports: [{ containerPort: 8080 }]
+          env:
+            - { name: KAFKA_CLUSTERS_0_NAME, value: scale }
+            - { name: KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS, value: "kafka.scale.svc.cluster.local:9092" }
+            - { name: SERVER_SERVLET_CONTEXT_PATH, value: /kafka-ui }
+            - { name: DYNAMIC_CONFIG_ENABLED, value: "false" }
+            - { name: AUTH_TYPE, value: LOGIN_FORM }                 # was open to anyone who could reach the URL
+            - name: SPRING_SECURITY_USER_NAME
+              valueFrom: { secretKeyRef: { name: kafka-ui-auth, key: username } }
+            - name: SPRING_SECURITY_USER_PASSWORD
+              valueFrom: { secretKeyRef: { name: kafka-ui-auth, key: password } }
+          readinessProbe:
+            httpGet: { path: /kafka-ui/actuator/health, port: 8080 }
+            initialDelaySeconds: 20
+            periodSeconds: 5
+          resources:
+            requests: { cpu: 50m, memory: 256Mi }
+            limits: { memory: 512Mi }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-ui
+  namespace: scale
+spec:
+  selector: { app: kafka-ui }
+  ports: [{ port: 8080 }]
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kafka-ui
+  namespace: scale
+spec:
+  ingressClassName: traefik
+  rules:
+    - http:
+        paths:
+          - path: /kafka-ui
+            pathType: Prefix
+            backend: { service: { name: kafka-ui, port: { number: 8080 } } }

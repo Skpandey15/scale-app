@@ -1,0 +1,16 @@
+# build output
+target/
+node_modules/
+dist/
+
+# regenerable load-test artefacts (large): JMeter HTML dashboards, raw results, k6 output
+loadtest/jmeter-*/
+loadtest/*.jtl
+loadtest/summary.json
+loadtest/result.txt
+
+# editors / OS
+.idea/
+.vscode/
+.DS_Store
+*.log

@@ -1,0 +1,70 @@
+server:
+  port: 8080
+  shutdown: graceful
+  tomcat:
+    max-connections: 20000
+    accept-count: 2000
+
+spring:
+  threads:
+    virtual:
+      enabled: true          # Java 21 virtual threads: cheap blocking I/O, high concurrency per node
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/app}
+    username: ${DB_USER:app}
+    password: ${DB_PASSWORD:app}
+    hikari:
+      maximum-pool-size: 10  # 6 pods x 10 = 60 < Postgres max_connections (100). Was 20: 6 x 20 exhausted the DB at peak.
+      minimum-idle: 2        # load test: only ~3 connections were ever active; PgBouncer is the next step beyond this
+      connection-timeout: 2000
+  flyway:
+    # Migrations take session-level locks, so they bypass the transaction-pooling PgBouncer and use the primary directly.
+    url: ${FLYWAY_URL:${DB_URL:jdbc:postgresql://localhost:5432/app}}
+    user: ${FLYWAY_USER:${DB_USER:app}}
+    password: ${FLYWAY_PASSWORD:${DB_PASSWORD:app}}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: 6379
+      timeout: 200ms
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP:localhost:9092}
+    producer:
+      acks: all                 # wait for the in-sync replicas (min.insync.replicas=2): survives a broker loss
+      properties:
+        enable.idempotence: true
+        max.block.ms: 2000        # never let a Kafka outage stall the request path
+        delivery.timeout.ms: 5000
+        request.timeout.ms: 3000
+    consumer:
+      auto-offset-reset: latest
+
+app:
+  jwt-secret: ${JWT_SECRET}          # no default on purpose: the app refuses to start without a real secret
+  jwt-ttl-minutes: 60
+  rate-limit-per-second: 50          # per client, all endpoints (sliding window)
+  rate-limit-auth-per-minute: 10     # per client, login/register only
+  auth:
+    max-concurrent-hashes: 4         # BCrypt bulkhead per pod
+  kafka:
+    replicas: ${KAFKA_TOPIC_REPLICAS:3}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      group:
+        liveness:
+          include: livenessState
+        readiness:
+          include: readinessState      # not redis/kafka/db: soft-dependency outages must not unready every pod

@@ -1,0 +1,474 @@
+@ 1791454132 idle
+top backend-58b899fbb8-hckjk 30m 351Mi
+top backend-58b899fbb8-jbzrv 1436m 338Mi
+top backend-58fbf74879-bw4vn 28m 323Mi
+top kafka-0 21m 509Mi
+top kafka-ui-7c7db7d74f-t7rds 2m 244Mi
+top postgres-0 17m 160Mi
+top redis-5cf7b4cb46-kfpnl 7m 11Mi
+top web-6ccc8fd66c-9pkkn 1m 10Mi
+top web-6ccc8fd66c-dgbtp 1m 10Mi
+node k3d-scale-agent-0 0% 18%
+node k3d-scale-agent-1 15% 18%
+node k3d-scale-server-0 1% 23%
+hpa 3 3
+restarts 0
+pg 490566 9 1311 30597343 24916846 13782946 695032 0 7 1
+outbox 0
+redis hits=597896 misses=47216 evicted=0 ops=0 mem=1209256
+be backend-58b899fbb8-9lcwx hik_active=0 hik_pending=0 hik_max=10 heap=53152768 gc_cnt=8 gc_sum=0.1060 proc_cpu=0.004 threads=28 http_cnt=4 http_sum=0.1270 http_max=0.0797
+be backend-58b899fbb8-hckjk hik_active=0 hik_pending=0 hik_max=10 heap=62380536 gc_cnt=8 gc_sum=0.1070 proc_cpu=0.000 threads=28 http_cnt=11 http_sum=0.1294 http_max=0.0713
+be backend-58b899fbb8-jbzrv hik_active=0 hik_pending=0 hik_max=10 heap=56757368 gc_cnt=7 gc_sum=0.1140 proc_cpu=0.000 threads=28 http_cnt=8 http_sum=0.1186 http_max=0.0824
+lag 0
+@ 1791454146 idle
+top backend-58b899fbb8-9lcwx 249m 334Mi
+top backend-58b899fbb8-hckjk 32m 351Mi
+top backend-58b899fbb8-jbzrv 34m 338Mi
+top kafka-0 18m 509Mi
+top kafka-ui-7c7db7d74f-t7rds 3m 245Mi
+top postgres-0 17m 160Mi
+top redis-5cf7b4cb46-kfpnl 6m 11Mi
+top web-6ccc8fd66c-9pkkn 1m 10Mi
+top web-6ccc8fd66c-dgbtp 1m 10Mi
+node k3d-scale-agent-0 1% 18%
+node k3d-scale-agent-1 6% 15%
+node k3d-scale-server-0 1% 19%
+hpa 3 3
+restarts 0
+pg 490722 9 1311 30598116 24917278 13783372 695032 0 7 1
+outbox 0
+redis hits=597896 misses=47216 evicted=0 ops=0 mem=1209256
+be backend-58b899fbb8-9lcwx hik_active=0 hik_pending=0 hik_max=10 heap=58169352 gc_cnt=8 gc_sum=0.1060 proc_cpu=0.004 threads=28 http_cnt=10 http_sum=0.1726 http_max=0.0797
+be backend-58b899fbb8-hckjk hik_active=0 hik_pending=0 hik_max=10 heap=67918344 gc_cnt=8 gc_sum=0.1070 proc_cpu=0.003 threads=28 http_cnt=15 http_sum=0.1901 http_max=0.0713
+be backend-58b899fbb8-jbzrv hik_active=0 hik_pending=0 hik_max=10 heap=62496544 gc_cnt=7 gc_sum=0.1140 proc_cpu=0.003 threads=28 http_cnt=12 http_sum=0.1718 http_max=0.0824
+@ 1791454158 warm-300-pool10
+top backend-58b899fbb8-9lcwx 48m 334Mi
+top backend-58b899fbb8-hckjk 43m 361Mi
+top backend-58b899fbb8-jbzrv 47m 340Mi
+top kafka-0 123m 519Mi
+top kafka-ui-7c7db7d74f-t7rds 3m 244Mi
+top postgres-0 17m 144Mi
+top redis-5cf7b4cb46-kfpnl 8m 12Mi
+top web-6ccc8fd66c-9pkkn 1m 10Mi
+top web-6ccc8fd66c-dgbtp 1m 10Mi
+node k3d-scale-agent-0 1% 18%
+node k3d-scale-agent-1 1% 15%
+node k3d-scale-server-0 1% 18%
+hpa 3 3
+restarts 0
+pg 490851 9 1311 30599069 24917828 13783915 695032 0 7 1
+outbox 0
+redis hits=597896 misses=47216 evicted=0 ops=0 mem=1209256
+be backend-58b899fbb8-9lcwx hik_active=0 hik_pending=0 hik_max=10 heap=48285112 gc_cnt=9 gc_sum=0.1130 proc_cpu=0.004 threads=28 http_cnt=14 http_sum=0.1984 http_max=0.0797
+be backend-58b899fbb8-hckjk hik_active=0 hik_pending=0 hik_max=10 heap=45529096 gc_cnt=9 gc_sum=0.1160 proc_cpu=0.003 threads=28 http_cnt=20 http_sum=0.2297 http_max=0.0713
+be backend-58b899fbb8-jbzrv hik_active=0 hik_pending=0 hik_max=10 heap=67181992 gc_cnt=7 gc_sum=0.1140 proc_cpu=0.004 threads=28 http_cnt=17 http_sum=0.2075 http_max=0.0824
+gen jmeter-warm-300-pool10 14.63% 29.31%
+@ 1791454169 warm-300-pool10
+top backend-58b899fbb8-9lcwx 42m 336Mi
+top backend-58b899fbb8-hckjk 37m 363Mi
+top backend-58b899fbb8-jbzrv 193m 376Mi
+top kafka-0 21m 519Mi
+top kafka-ui-7c7db7d74f-t7rds 3m 244Mi
+top postgres-0 20m 145Mi
+top redis-5cf7b4cb46-kfpnl 11m 13Mi
+top web-6ccc8fd66c-9pkkn 1m 10Mi
+top web-6ccc8fd66c-dgbtp 1m 10Mi
+node k3d-scale-agent-0 1% 18%
+node k3d-scale-agent-1 1% 15%
+node k3d-scale-server-0 1% 19%
+hpa 3 3
+restarts 0
+pg 491439 9 1311 30610551 24996676 13786392 695560 0 9 1
+outbox 2
+redis hits=598432 misses=47239 evicted=0 ops=410 mem=1291272
+be backend-58b899fbb8-9lcwx hik_active=0 hik_pending=0 hik_max=10 heap=51411472 gc_cnt=16 gc_sum=0.1580 proc_cpu=0.066 threads=33 http_cnt=421 http_sum=6.0327 http_max=0.6288
+be backend-58b899fbb8-hckjk hik_active=0 hik_pending=0 hik_max=10 heap=64250352 gc_cnt=16 gc_sum=0.1660 proc_cpu=0.063 threads=33 http_cnt=437 http_sum=5.7673 http_max=0.5486
+be backend-58b899fbb8-jbzrv hik_active=0 hik_pending=0 hik_max=10 heap=65768096 gc_cnt=15 gc_sum=0.1710 proc_cpu=0.068 threads=33 http_cnt=451 http_sum=5.7682 http_max=0.5541
+gen jmeter-warm-300-pool10 50.89% 38.57%
+lag 0
+@ 1791454183 warm-300-pool10
+top backend-58b899fbb8-9lcwx 825m 388Mi
+top backend-58b899fbb8-hckjk 720m 422Mi
+top backend-58b899fbb8-jbzrv 1244m 404Mi
+top kafka-0 19m 518Mi
+top kafka-ui-7c7db7d74f-t7rds 2m 244Mi
+top postgres-0 34m 147Mi
+top redis-5cf7b4cb46-kfpnl 20m 14Mi
+top web-6ccc8fd66c-9pkkn 1m 10Mi
+top web-6ccc8fd66c-dgbtp 1m 10Mi
+node k3d-scale-agent-0 12% 19%
+node k3d-scale-agent-1 20% 17%
+node k3d-scale-server-0 1% 19%
+hpa 3 3
+restarts 0
+pg 494232 9 1311 30644558 26020377 13789684 696379 0 15 1
+outbox 8
+redis hits=604191 misses=47466 evicted=0 ops=1450 mem=1315848
+be backend-58b899fbb8-9lcwx hik_active=2 hik_pending=0 hik_max=10 heap=76617864 gc_cnt=35 gc_sum=0.2860 proc_cpu=0.134 threads=39 http_cnt=3430 http_sum=31.9981 http_max=0.6288
+be backend-58b899fbb8-hckjk hik_active=1 hik_pending=0 hik_max=10 heap=61718776 gc_cnt=37 gc_sum=0.3680 proc_cpu=0.134 threads=39 http_cnt=3543 http_sum=44.3483 http_max=0.5486
+be backend-58b899fbb8-jbzrv hik_active=1 hik_pending=0 hik_max=10 heap=63134280 gc_cnt=36 gc_sum=0.3250 proc_cpu=0.135 threads=39 http_cnt=3622 http_sum=34.0527 http_max=0.5541
+gen jmeter-warm-300-pool10 44.62% 62.55%
+@ 1791454197 warm-300-pool10
+top backend-58b899fbb8-8bksz 1705m 189Mi
+top backend-58b899fbb8-9lcwx 1528m 416Mi
+top backend-58b899fbb8-hckjk 1598m 445Mi
+top backend-58b899fbb8-jbzrv 1244m 404Mi
+top backend-58b899fbb8-kzc4n 1609m 198Mi
+top backend-58b899fbb8-x5q65 1580m 193Mi
+top kafka-0 226m 521Mi
+top kafka-ui-7c7db7d74f-t7rds 8m 247Mi
+top postgres-0 139m 190Mi
+top redis-5cf7b4cb46-kfpnl 86m 13Mi
+top web-6ccc8fd66c-9pkkn 1m 10Mi
+top web-6ccc8fd66c-dgbtp 1m 10Mi
+node k3d-scale-agent-0 22% 21%
+node k3d-scale-agent-1 29% 17%
+node k3d-scale-server-0 3% 20%
+hpa 3 6
+restarts 0
+pg 498209 9 1311 30729044 28469445 13806552 697175 0 31 1
+outbox 8
+redis hits=610418 misses=48305 evicted=0 ops=1185 mem=1328136
+be backend-58b899fbb8-8bksz hik_active=0 hik_pending=0 hik_max=0 heap=0 gc_cnt=0 gc_sum=0.0000 proc_cpu=0.000 threads=0 http_cnt=0 http_sum=0.0000 http_max=0.0000
+be backend-58b899fbb8-9lcwx hik_active=1 hik_pending=0 hik_max=10 heap=74162088 gc_cnt=57 gc_sum=0.8300 proc_cpu=0.113 threads=40 http_cnt=7003 http_sum=99.4162 http_max=0.6288
+be backend-58b899fbb8-hckjk hik_active=1 hik_pending=0 hik_max=10 heap=86688608 gc_cnt=58 gc_sum=0.8360 proc_cpu=0.113 threads=39 http_cnt=7082 http_sum=143.1365 http_max=0.5486
+be backend-58b899fbb8-jbzrv hik_active=1 hik_pending=0 hik_max=10 heap=85875704 gc_cnt=56 gc_sum=0.7990 proc_cpu=0.110 threads=39 http_cnt=7144 http_sum=95.5033 http_max=0.5541
+be backend-58b899fbb8-kzc4n hik_active=0 hik_pending=0 hik_max=0 heap=0 gc_cnt=0 gc_sum=0.0000 proc_cpu=0.000 threads=0 http_cnt=0 http_sum=0.0000 http_max=0.0000
+be backend-58b899fbb8-x5q65 hik_active=0 hik_pending=0 hik_max=0 heap=0 gc_cnt=0 gc_sum=0.0000 proc_cpu=0.000 threads=0 http_cnt=0 http_sum=0.0000 http_max=0.0000
+gen jmeter-warm-300-pool10 37.06% 75.58%
+@ 1791454212 warm-300-pool10
+top backend-58b899fbb8-8bksz 1852m 231Mi
+top backend-58b899fbb8-9lcwx 1326m 432Mi
+top backend-58b899fbb8-hckjk 1342m 459Mi
+top backend-58b899fbb8-jbzrv 1354m 438Mi
+top backend-58b899fbb8-kzc4n 1606m 203Mi
+top backend-58b899fbb8-x5q65 1784m 251Mi
+top kafka-0 42m 484Mi
+top kafka-ui-7c7db7d74f-t7rds 4m 233Mi
+top postgres-0 206m 204Mi
+top redis-5cf7b4cb46-kfpnl 80m 11Mi
+top web-6ccc8fd66c-9pkkn 1m 10Mi
+top web-6ccc8fd66c-dgbtp 1m 10Mi
+node k3d-scale-agent-0 28% 22%
+node k3d-scale-agent-1 25% 16%
+node k3d-scale-server-0 29% 25%
+hpa 6 6
+restarts 0
+pg 502942 9 1311 30869928 32548304 13830782 698137 0 58 3
+outbox 3
+redis hits=618327 misses=48957 evicted=0 ops=1329 mem=1407352
+be backend-58b899fbb8-8bksz hik_active=0 hik_pending=0 hik_max=10 heap=80826568 gc_cnt=16 gc_sum=0.3450 proc_cpu=0.200 threads=39 http_cnt=589 http_sum=30.8805 http_max=0.7899
+be backend-58b899fbb8-9lcwx hik_active=0 hik_pending=0 hik_max=10 heap=67031976 gc_cnt=73 gc_sum=0.8950 proc_cpu=0.087 threads=40 http_cnt=10414 http_sum=127.2909 http_max=0.6288
+be backend-58b899fbb8-hckjk hik_active=0 hik_pending=0 hik_max=10 heap=86903232 gc_cnt=73 gc_sum=0.9030 proc_cpu=0.087 threads=39 http_cnt=10453 http_sum=174.4500 http_max=0.5486
+be backend-58b899fbb8-jbzrv hik_active=0 hik_pending=0 hik_max=10 heap=94015416 gc_cnt=72 gc_sum=0.8720 proc_cpu=0.080 threads=39 http_cnt=10490 http_sum=119.7440 http_max=0.5541
+be backend-58b899fbb8-kzc4n hik_active=0 hik_pending=0 hik_max=10 heap=75731992 gc_cnt=16 gc_sum=0.3780 proc_cpu=0.200 threads=39 http_cnt=482 http_sum=82.5961 http_max=1.6117
+be backend-58b899fbb8-x5q65 hik_active=0 hik_pending=0 hik_max=10 heap=87440216 gc_cnt=19 gc_sum=0.3740 proc_cpu=0.200 threads=39 http_cnt=794 http_sum=110.6052 http_max=1.4703
+gen jmeter-warm-300-pool10 31.94% 74.18%
+lag 0
+@ 1791454230 warm-300-pool10
+top backend-58b899fbb8-8bksz 1853m 404Mi
+top backend-58b899fbb8-9lcwx 1326m 432Mi
+top backend-58b899fbb8-hckjk 992m 452Mi
+top backend-58b899fbb8-jbzrv 678m 435Mi
+top backend-58b899fbb8-kzc4n 1616m 419Mi
+top backend-58b899fbb8-x5q65 1598m 410Mi
+top kafka-0 46m 475Mi
+top kafka-ui-7c7db7d74f-t7rds 3m 239Mi
+top postgres-0 203m 246Mi
+top redis-5cf7b4cb46-kfpnl 107m 14Mi
+top web-6ccc8fd66c-9pkkn 1m 10Mi
+top web-6ccc8fd66c-dgbtp 1m 10Mi
+node k3d-scale-agent-0 24% 23%
+node k3d-scale-agent-1 14% 15%
+node k3d-scale-server-0 33% 28%
+hpa 6 6
+restarts 0
+pg 508150 9 1311 31017435 34297673 13867666 699294 0 58 1
+outbox 1
+redis hits=627519 misses=49437 evicted=0 ops=1499 mem=1373048
+be backend-58b899fbb8-8bksz hik_active=0 hik_pending=0 hik_max=10 heap=62748144 gc_cnt=33 gc_sum=0.4730 proc_cpu=0.096 threads=39 http_cnt=2866 http_sum=45.6475 http_max=0.7899
+be backend-58b899fbb8-9lcwx hik_active=0 hik_pending=0 hik_max=10 heap=79705680 gc_cnt=83 gc_sum=0.9300 proc_cpu=0.040 threads=40 http_cnt=12678 http_sum=135.4885 http_max=0.6288
+be backend-58b899fbb8-hckjk hik_active=0 hik_pending=0 hik_max=10 heap=80177176 gc_cnt=83 gc_sum=0.9380 proc_cpu=0.043 threads=39 http_cnt=12709 http_sum=183.4682 http_max=0.5486
+be backend-58b899fbb8-jbzrv hik_active=0 hik_pending=0 hik_max=10 heap=85051944 gc_cnt=83 gc_sum=0.9100 proc_cpu=0.040 threads=39 http_cnt=12731 http_sum=127.1542 http_max=0.5541
+be backend-58b899fbb8-kzc4n hik_active=0 hik_pending=0 hik_max=10 heap=93143712 gc_cnt=30 gc_sum=0.4810 proc_cpu=0.099 threads=39 http_cnt=2703 http_sum=97.2764 http_max=1.6117
+be backend-58b899fbb8-x5q65 hik_active=0 hik_pending=0 hik_max=10 heap=69516240 gc_cnt=36 gc_sum=0.4790 proc_cpu=0.093 threads=39 http_cnt=2988 http_sum=122.9284 http_max=1.4703
+gen jmeter-warm-300-pool10 37.84% 74.64%
+@ 1791454242 warm-300-pool10
+top backend-58b899fbb8-8bksz 987m 415Mi
+top backend-58b899fbb8-9lcwx 482m 438Mi
+top backend-58b899fbb8-hckjk 511m 458Mi
+top backend-58b899fbb8-jbzrv 422m 440Mi
+top backend-58b899fbb8-kzc4n 908m 439Mi
+top backend-58b899fbb8-x5q65 1476m 438Mi
+top kafka-0 225m 516Mi
+top kafka-ui-7c7db7d74f-t7rds 4m 239Mi
+top postgres-0 174m 250Mi
+top redis-5cf7b4cb46-kfpnl 127m 14Mi
+top web-6ccc8fd66c-9pkkn 1m 10Mi
+top web-6ccc8fd66c-dgbtp 1m 10Mi
+node k3d-scale-agent-0 16% 22%
+node k3d-scale-agent-1 11% 16%
+node k3d-scale-server-0 21% 28%
+hpa 6 6
+restarts 0
+pg 511889 9 1311 31095688 34331084 13890527 700154 0 58 2
+outbox 9
+redis hits=634792 misses=49687 evicted=0 ops=799 mem=1375128
+be backend-58b899fbb8-8bksz hik_active=0 hik_pending=0 hik_max=10 heap=72956768 gc_cnt=46 gc_sum=0.5120 proc_cpu=0.059 threads=39 http_cnt=4622 http_sum=52.5608 http_max=0.7899
+be backend-58b899fbb8-9lcwx hik_active=0 hik_pending=0 hik_max=10 heap=78392200 gc_cnt=91 gc_sum=0.9510 proc_cpu=0.037 threads=39 http_cnt=14412 http_sum=140.0178 http_max=0.6288
+be backend-58b899fbb8-hckjk hik_active=0 hik_pending=0 hik_max=10 heap=98039160 gc_cnt=90 gc_sum=0.9570 proc_cpu=0.034 threads=39 http_cnt=14418 http_sum=187.7876 http_max=0.5486
+be backend-58b899fbb8-jbzrv hik_active=0 hik_pending=0 hik_max=10 heap=89348936 gc_cnt=91 gc_sum=0.9340 proc_cpu=0.034 threads=39 http_cnt=14416 http_sum=131.2938 http_max=0.5541
+be backend-58b899fbb8-kzc4n hik_active=0 hik_pending=0 hik_max=10 heap=80926712 gc_cnt=41 gc_sum=0.5260 proc_cpu=0.053 threads=39 http_cnt=4366 http_sum=102.4245 http_max=1.6117
+be backend-58b899fbb8-x5q65 hik_active=0 hik_pending=0 hik_max=10 heap=80057464 gc_cnt=48 gc_sum=0.5160 proc_cpu=0.057 threads=39 http_cnt=4624 http_sum=129.1556 http_max=1.4703
+@ 1791454256 idle
+top backend-58b899fbb8-8bksz 987m 415Mi
+top backend-58b899fbb8-9lcwx 482m 438Mi
+top backend-58b899fbb8-hckjk 511m 458Mi
+top backend-58b899fbb8-jbzrv 422m 440Mi
+top backend-58b899fbb8-kzc4n 908m 439Mi
+top backend-58b899fbb8-x5q65 1476m 438Mi
+top kafka-0 225m 516Mi
+top kafka-ui-7c7db7d74f-t7rds 4m 239Mi
+top postgres-0 174m 250Mi
+top redis-5cf7b4cb46-kfpnl 127m 14Mi
+top web-6ccc8fd66c-9pkkn 1m 10Mi
+top web-6ccc8fd66c-dgbtp 1m 10Mi
+node k3d-scale-agent-0 16% 22%
+node k3d-scale-agent-1 11% 16%
+node k3d-scale-server-0 21% 28%
+hpa 6 6
+restarts 0
+pg 512272 9 1311 31100957 34333041 13892109 700204 0 58 1
+outbox 0
+redis hits=634792 misses=49687 evicted=0 ops=0 mem=1224152
+be backend-58b899fbb8-8bksz hik_active=0 hik_pending=0 hik_max=10 heap=79437472 gc_cnt=46 gc_sum=0.5120 proc_cpu=0.002 threads=38 http_cnt=4628 http_sum=52.5817 http_max=0.7899
+be backend-58b899fbb8-9lcwx hik_active=0 hik_pending=0 hik_max=10 heap=85361472 gc_cnt=91 gc_sum=0.9510 proc_cpu=0.001 threads=39 http_cnt=14416 http_sum=140.0330 http_max=0.6288
+be backend-58b899fbb8-hckjk hik_active=0 hik_pending=0 hik_max=10 heap=67619264 gc_cnt=91 gc_sum=0.9590 proc_cpu=0.001 threads=38 http_cnt=14422 http_sum=187.8067 http_max=0.5486
+be backend-58b899fbb8-jbzrv hik_active=0 hik_pending=0 hik_max=10 heap=61725192 gc_cnt=92 gc_sum=0.9370 proc_cpu=0.001 threads=38 http_cnt=14420 http_sum=131.3118 http_max=0.5541
+be backend-58b899fbb8-kzc4n hik_active=0 hik_pending=0 hik_max=10 heap=87087624 gc_cnt=41 gc_sum=0.5260 proc_cpu=0.002 threads=38 http_cnt=4370 http_sum=102.4430 http_max=1.6117
+be backend-58b899fbb8-x5q65 hik_active=0 hik_pending=0 hik_max=10 heap=86061040 gc_cnt=48 gc_sum=0.5160 proc_cpu=0.002 threads=38 http_cnt=4628 http_sum=129.1738 http_max=1.4703
+lag 0
+@ 1791454269 idle
+top backend-58b899fbb8-8bksz 987m 415Mi
+top backend-58b899fbb8-9lcwx 280m 439Mi
+top backend-58b899fbb8-hckjk 443m 459Mi
+top backend-58b899fbb8-jbzrv 182m 453Mi
+top backend-58b899fbb8-kzc4n 399m 431Mi
+top backend-58b899fbb8-x5q65 789m 434Mi
+top kafka-0 36m 507Mi
+top kafka-ui-7c7db7d74f-t7rds 4m 239Mi
+top postgres-0 91m 248Mi
+top redis-5cf7b4cb46-kfpnl 127m 14Mi
+top web-6ccc8fd66c-9pkkn 1m 10Mi
+top web-6ccc8fd66c-dgbtp 1m 10Mi
+node k3d-scale-agent-0 9% 22%
+node k3d-scale-agent-1 6% 15%
+node k3d-scale-server-0 11% 28%
+hpa 6 6
+restarts 0
+pg 512454 9 1311 31101978 34335910 13892540 700204 0 58 1
+outbox 0
+redis hits=634792 misses=49687 evicted=0 ops=0 mem=1224152
+be backend-58b899fbb8-8bksz hik_active=0 hik_pending=0 hik_max=10 heap=59228160 gc_cnt=47 gc_sum=0.5140 proc_cpu=0.002 threads=38 http_cnt=4632 http_sum=52.5965 http_max=0.7899
+be backend-58b899fbb8-9lcwx hik_active=0 hik_pending=0 hik_max=10 heap=92776776 gc_cnt=91 gc_sum=0.9510 proc_cpu=0.001 threads=39 http_cnt=14421 http_sum=140.0465 http_max=0.6288
+be backend-58b899fbb8-hckjk hik_active=0 hik_pending=0 hik_max=10 heap=74691600 gc_cnt=91 gc_sum=0.9590 proc_cpu=0.001 threads=38 http_cnt=14427 http_sum=187.8242 http_max=0.5486
+be backend-58b899fbb8-jbzrv hik_active=0 hik_pending=0 hik_max=10 heap=69101336 gc_cnt=92 gc_sum=0.9370 proc_cpu=0.001 threads=38 http_cnt=14425 http_sum=131.3260 http_max=0.5541
+be backend-58b899fbb8-kzc4n hik_active=0 hik_pending=0 hik_max=10 heap=95087480 gc_cnt=41 gc_sum=0.5260 proc_cpu=0.001 threads=38 http_cnt=4374 http_sum=102.4612 http_max=1.6117
+be backend-58b899fbb8-x5q65 hik_active=0 hik_pending=0 hik_max=10 heap=94345968 gc_cnt=48 gc_sum=0.5160 proc_cpu=0.001 threads=38 http_cnt=4632 http_sum=129.1909 http_max=1.4703
+gen jmeter-stress-100-pool10 159.91% 15.43%
+@ 1791454281 stress-100-pool10
+top backend-58b899fbb8-8bksz 139m 413Mi
+top backend-58b899fbb8-9lcwx 15m 440Mi
+top backend-58b899fbb8-hckjk 26m 459Mi
+top backend-58b899fbb8-jbzrv 182m 453Mi
+top backend-58b899fbb8-kzc4n 18m 430Mi
+top backend-58b899fbb8-x5q65 42m 432Mi
+top kafka-0 142m 530Mi
+top kafka-ui-7c7db7d74f-t7rds 3m 237Mi
+top postgres-0 23m 250Mi
+top redis-5cf7b4cb46-kfpnl 39m 11Mi
+top web-6ccc8fd66c-9pkkn 1m 10Mi
+top web-6ccc8fd66c-dgbtp 1m 10Mi
+node k3d-scale-agent-0 2% 22%
+node k3d-scale-agent-1 0% 16%
+node k3d-scale-server-0 1% 28%
+hpa 6 6
+restarts 0
+pg 514826 9 1311 31223490 35234492 13952004 701090 0 58 1
+outbox 6
+redis hits=639543 misses=50031 evicted=0 ops=1986 mem=1441144
+be backend-58b899fbb8-8bksz hik_active=3 hik_pending=0 hik_max=10 heap=55973432 gc_cnt=57 gc_sum=0.7140 proc_cpu=0.052 threads=39 http_cnt=5992 http_sum=71.9107 http_max=0.7899
+be backend-58b899fbb8-9lcwx hik_active=2 hik_pending=0 hik_max=10 heap=91703816 gc_cnt=98 gc_sum=0.9790 proc_cpu=0.037 threads=40 http_cnt=15857 http_sum=155.3344 http_max=0.6288
+be backend-58b899fbb8-hckjk hik_active=0 hik_pending=0 hik_max=10 heap=70790312 gc_cnt=98 gc_sum=1.0150 proc_cpu=0.037 threads=39 http_cnt=15933 http_sum=207.8882 http_max=0.5486
+be backend-58b899fbb8-jbzrv hik_active=1 hik_pending=0 hik_max=10 heap=63232816 gc_cnt=100 gc_sum=0.9780 proc_cpu=0.038 threads=39 http_cnt=16001 http_sum=149.2472 http_max=0.5541
+be backend-58b899fbb8-kzc4n hik_active=1 hik_pending=0 hik_max=10 heap=73865920 gc_cnt=51 gc_sum=0.7970 proc_cpu=0.054 threads=39 http_cnt=6036 http_sum=135.0581 http_max=1.6117
+be backend-58b899fbb8-x5q65 hik_active=0 hik_pending=0 hik_max=10 heap=80115008 gc_cnt=59 gc_sum=0.7140 proc_cpu=0.061 threads=39 http_cnt=6401 http_sum=163.4326 http_max=1.4703
+gen jmeter-stress-100-pool10 58.97% 48.67%
+@ 1791454296 stress-100-pool10
+top backend-58b899fbb8-8bksz 318m 416Mi
+top backend-58b899fbb8-9lcwx 452m 450Mi
+top backend-58b899fbb8-hckjk 201m 461Mi
+top backend-58b899fbb8-jbzrv 14m 453Mi
+top backend-58b899fbb8-kzc4n 18m 430Mi
+top backend-58b899fbb8-x5q65 432m 439Mi
+top kafka-0 19m 531Mi
+top kafka-ui-7c7db7d74f-t7rds 3m 238Mi
+top postgres-0 84m 255Mi
+top redis-5cf7b4cb46-kfpnl 15m 12Mi
+top web-6ccc8fd66c-9pkkn 1m 10Mi
+top web-6ccc8fd66c-dgbtp 1m 10Mi
+node k3d-scale-agent-0 4% 22%
+node k3d-scale-agent-1 3% 15%
+node k3d-scale-server-0 2% 29%
+hpa 6 6
+restarts 0
+pg 526040 9 1311 31846830 35860560 14332141 703320 0 61 1
+outbox 32
+redis hits=656173 misses=52806 evicted=0 ops=4226 mem=1443192
+be backend-58b899fbb8-8bksz hik_active=0 hik_pending=0 hik_max=10 heap=84361416 gc_cnt=82 gc_sum=0.9690 proc_cpu=0.125 threads=39 http_cnt=10726 http_sum=189.4212 http_max=0.7899
+be backend-58b899fbb8-9lcwx hik_active=2 hik_pending=0 hik_max=10 heap=64015688 gc_cnt=121 gc_sum=1.1320 proc_cpu=0.087 threads=40 http_cnt=20637 http_sum=236.9702 http_max=0.6288
+be backend-58b899fbb8-hckjk hik_active=1 hik_pending=0 hik_max=10 heap=82985504 gc_cnt=119 gc_sum=1.1980 proc_cpu=0.084 threads=39 http_cnt=20764 http_sum=321.8131 http_max=0.5486
+be backend-58b899fbb8-jbzrv hik_active=1 hik_pending=0 hik_max=10 heap=72141896 gc_cnt=123 gc_sum=1.1280 proc_cpu=0.085 threads=39 http_cnt=20850 http_sum=235.9525 http_max=0.5541
+be backend-58b899fbb8-kzc4n hik_active=4 hik_pending=0 hik_max=10 heap=88057032 gc_cnt=72 gc_sum=1.1540 proc_cpu=0.126 threads=39 http_cnt=10917 http_sum=275.8048 http_max=1.6117
+be backend-58b899fbb8-x5q65 hik_active=2 hik_pending=0 hik_max=10 heap=81402800 gc_cnt=84 gc_sum=1.0220 proc_cpu=0.132 threads=39 http_cnt=11292 http_sum=317.3290 http_max=1.4703
+gen jmeter-stress-100-pool10 59.41% 49.46%
+lag 46
+@ 1791454315 stress-100-pool10
+top backend-58b899fbb8-8bksz 1429m 435Mi
+top backend-58b899fbb8-9lcwx 1043m 445Mi
+top backend-58b899fbb8-hckjk 989m 464Mi
+top backend-58b899fbb8-jbzrv 769m 457Mi
+top backend-58b899fbb8-kzc4n 687m 442Mi
+top backend-58b899fbb8-x5q65 1462m 452Mi
+top kafka-0 69m 530Mi
+top kafka-ui-7c7db7d74f-t7rds 4m 238Mi
+top postgres-0 471m 259Mi
+top redis-5cf7b4cb46-kfpnl 109m 12Mi
+top web-6ccc8fd66c-9pkkn 1m 10Mi
+top web-6ccc8fd66c-dgbtp 1m 10Mi
+node k3d-scale-agent-0 24% 22%
+node k3d-scale-agent-1 21% 15%
+node k3d-scale-server-0 26% 29%
+hpa 6 6
+restarts 0
+pg 546535 9 1311 33005861 36618886 15039083 707310 0 61 2
+outbox 3
+redis hits=686847 misses=57869 evicted=0 ops=4948 mem=1443192
+be backend-58b899fbb8-8bksz hik_active=1 hik_pending=0 hik_max=10 heap=84262312 gc_cnt=127 gc_sum=1.3360 proc_cpu=0.112 threads=39 http_cnt=19354 http_sum=378.8556 http_max=0.7899
+be backend-58b899fbb8-9lcwx hik_active=1 hik_pending=0 hik_max=10 heap=92465944 gc_cnt=161 gc_sum=1.4130 proc_cpu=0.087 threads=40 http_cnt=29286 http_sum=381.6830 http_max=0.6288
+be backend-58b899fbb8-hckjk hik_active=6 hik_pending=0 hik_max=10 heap=81764928 gc_cnt=157 gc_sum=1.5640 proc_cpu=0.089 threads=39 http_cnt=29427 http_sum=496.7017 http_max=0.5486
+be backend-58b899fbb8-jbzrv hik_active=0 hik_pending=0 hik_max=10 heap=92913152 gc_cnt=164 gc_sum=1.4100 proc_cpu=0.088 threads=39 http_cnt=29561 http_sum=377.6874 http_max=0.5541
+be backend-58b899fbb8-kzc4n hik_active=2 hik_pending=0 hik_max=10 heap=66657312 gc_cnt=109 gc_sum=1.5360 proc_cpu=0.108 threads=39 http_cnt=19649 http_sum=469.7992 http_max=1.6117
+be backend-58b899fbb8-x5q65 hik_active=1 hik_pending=0 hik_max=10 heap=84301832 gc_cnt=125 gc_sum=1.4090 proc_cpu=0.111 threads=39 http_cnt=20040 http_sum=508.7643 http_max=1.4703
+gen jmeter-stress-100-pool10 75.81% 49.81%
+@ 1791454329 stress-100-pool10
+top backend-58b899fbb8-8bksz 1429m 435Mi
+top backend-58b899fbb8-9lcwx 971m 448Mi
+top backend-58b899fbb8-hckjk 1041m 465Mi
+top backend-58b899fbb8-jbzrv 1004m 460Mi
+top backend-58b899fbb8-kzc4n 1449m 457Mi
+top backend-58b899fbb8-x5q65 1481m 462Mi
+top kafka-0 242m 533Mi
+top kafka-ui-7c7db7d74f-t7rds 3m 240Mi
+top postgres-0 577m 262Mi
+top redis-5cf7b4cb46-kfpnl 105m 11Mi
+top web-6ccc8fd66c-9pkkn 1m 10Mi
+top web-6ccc8fd66c-dgbtp 1m 10Mi
+node k3d-scale-agent-0 27% 22%
+node k3d-scale-agent-1 21% 16%
+node k3d-scale-server-0 28% 30%
+hpa 6 6
+restarts 0
+pg 564740 9 1311 34034279 37307778 15666579 710998 0 61 4
+outbox 8
+redis hits=715358 misses=61825 evicted=0 ops=5719 mem=1443192
+be backend-58b899fbb8-8bksz hik_active=3 hik_pending=0 hik_max=10 heap=71156112 gc_cnt=166 gc_sum=1.6360 proc_cpu=0.091 threads=39 http_cnt=26991 http_sum=509.2235 http_max=0.7899
+be backend-58b899fbb8-9lcwx hik_active=3 hik_pending=0 hik_max=10 heap=61178952 gc_cnt=196 gc_sum=1.6950 proc_cpu=0.100 threads=40 http_cnt=36905 http_sum=496.6539 http_max=0.6288
+be backend-58b899fbb8-hckjk hik_active=2 hik_pending=0 hik_max=10 heap=89922520 gc_cnt=190 gc_sum=1.8870 proc_cpu=0.095 threads=39 http_cnt=37046 http_sum=628.2171 http_max=0.5486
+be backend-58b899fbb8-jbzrv hik_active=1 hik_pending=0 hik_max=10 heap=65209960 gc_cnt=201 gc_sum=1.6700 proc_cpu=0.096 threads=39 http_cnt=37148 http_sum=494.4466 http_max=0.5541
+be backend-58b899fbb8-kzc4n hik_active=0 hik_pending=0 hik_max=10 heap=84449464 gc_cnt=140 gc_sum=1.8420 proc_cpu=0.097 threads=39 http_cnt=27247 http_sum=605.7900 http_max=1.6117
+be backend-58b899fbb8-x5q65 hik_active=1 hik_pending=0 hik_max=10 heap=76582928 gc_cnt=161 gc_sum=1.6480 proc_cpu=0.097 threads=39 http_cnt=27637 http_sum=643.3568 http_max=1.4703
+gen jmeter-stress-100-pool10 69.60% 50.15%
+@ 1791454344 stress-100-pool10
+top backend-58b899fbb8-8bksz 1321m 435Mi
+top backend-58b899fbb8-9lcwx 1070m 456Mi
+top backend-58b899fbb8-hckjk 1140m 467Mi
+top backend-58b899fbb8-jbzrv 1058m 460Mi
+top backend-58b899fbb8-kzc4n 1267m 464Mi
+top backend-58b899fbb8-x5q65 1147m 464Mi
+top kafka-0 242m 533Mi
+top kafka-ui-7c7db7d74f-t7rds 5m 242Mi
+top postgres-0 627m 263Mi
+top redis-5cf7b4cb46-kfpnl 105m 11Mi
+top web-6ccc8fd66c-9pkkn 1m 10Mi
+top web-6ccc8fd66c-dgbtp 1m 10Mi
+node k3d-scale-agent-0 24% 22%
+node k3d-scale-agent-1 24% 16%
+node k3d-scale-server-0 26% 30%
+hpa 6 6
+restarts 0
+pg 581934 9 1311 35023705 37960035 16262198 714471 0 61 3
+outbox 37
+redis hits=741982 misses=65612 evicted=0 ops=5438 mem=1443192
+be backend-58b899fbb8-8bksz hik_active=3 hik_pending=0 hik_max=10 heap=72262072 gc_cnt=203 gc_sum=1.9430 proc_cpu=0.097 threads=39 http_cnt=34222 http_sum=632.6723 http_max=0.7899
+be backend-58b899fbb8-9lcwx hik_active=2 hik_pending=0 hik_max=10 heap=74643792 gc_cnt=229 gc_sum=1.9340 proc_cpu=0.097 threads=40 http_cnt=44153 http_sum=611.1023 http_max=0.3139
+be backend-58b899fbb8-hckjk hik_active=0 hik_pending=0 hik_max=10 heap=79751408 gc_cnt=222 gc_sum=2.1870 proc_cpu=0.092 threads=39 http_cnt=44321 http_sum=759.4822 http_max=0.3409
+be backend-58b899fbb8-jbzrv hik_active=0 hik_pending=0 hik_max=10 heap=70545472 gc_cnt=236 gc_sum=1.8790 proc_cpu=0.090 threads=39 http_cnt=44499 http_sum=608.9011 http_max=0.2523
+be backend-58b899fbb8-kzc4n hik_active=1 hik_pending=0 hik_max=10 heap=98359016 gc_cnt=170 gc_sum=2.0520 proc_cpu=0.099 threads=39 http_cnt=34582 http_sum=738.6954 http_max=1.6117
+be backend-58b899fbb8-x5q65 hik_active=0 hik_pending=0 hik_max=10 heap=86129344 gc_cnt=196 gc_sum=1.9510 proc_cpu=0.099 threads=39 http_cnt=35007 http_sum=778.1264 http_max=1.4703
+gen jmeter-stress-100-pool10 78.36% 50.16%
+lag 0
+@ 1791454361 idle
+top backend-58b899fbb8-8bksz 1110m 439Mi
+top backend-58b899fbb8-9lcwx 888m 461Mi
+top backend-58b899fbb8-hckjk 806m 476Mi
+top backend-58b899fbb8-jbzrv 1105m 463Mi
+top backend-58b899fbb8-kzc4n 933m 466Mi
+top backend-58b899fbb8-x5q65 1099m 466Mi
+top kafka-0 60m 548Mi
+top kafka-ui-7c7db7d74f-t7rds 3m 242Mi
+top postgres-0 461m 265Mi
+top redis-5cf7b4cb46-kfpnl 114m 12Mi
+top web-6ccc8fd66c-9pkkn 1m 10Mi
+top web-6ccc8fd66c-dgbtp 1m 10Mi
+node k3d-scale-agent-0 25% 23%
+node k3d-scale-agent-1 15% 16%
+node k3d-scale-server-0 20% 30%
+hpa 6 6
+restarts 0
+pg 590521 9 1311 35519987 38322784 16551439 716215 0 61 1
+outbox 0
+redis hits=753211 misses=67034 evicted=0 ops=0 mem=1224152
+be backend-58b899fbb8-8bksz hik_active=0 hik_pending=0 hik_max=10 heap=95812968 gc_cnt=217 gc_sum=2.0920 proc_cpu=0.037 threads=38 http_cnt=37038 http_sum=696.1297 http_max=0.7899
+be backend-58b899fbb8-9lcwx hik_active=0 hik_pending=0 hik_max=10 heap=93195536 gc_cnt=241 gc_sum=2.0360 proc_cpu=0.030 threads=39 http_cnt=46827 http_sum=651.1240 http_max=0.2357
+be backend-58b899fbb8-hckjk hik_active=0 hik_pending=0 hik_max=10 heap=82704304 gc_cnt=233 gc_sum=2.2970 proc_cpu=0.029 threads=38 http_cnt=46833 http_sum=808.5101 http_max=0.2354
+be backend-58b899fbb8-jbzrv hik_active=0 hik_pending=0 hik_max=10 heap=79806344 gc_cnt=247 gc_sum=2.0020 proc_cpu=0.032 threads=38 http_cnt=46829 http_sum=650.0984 http_max=0.2523
+be backend-58b899fbb8-kzc4n hik_active=0 hik_pending=0 hik_max=10 heap=65648848 gc_cnt=180 gc_sum=2.1050 proc_cpu=0.026 threads=38 http_cnt=36782 http_sum=778.2527 http_max=1.6117
+be backend-58b899fbb8-x5q65 hik_active=0 hik_pending=0 hik_max=10 heap=76924208 gc_cnt=206 gc_sum=2.0430 proc_cpu=0.030 threads=38 http_cnt=37038 http_sum=816.1190 http_max=1.4703
+@ 1791454373 idle
+top backend-58b899fbb8-8bksz 1110m 439Mi
+top backend-58b899fbb8-9lcwx 888m 461Mi
+top backend-58b899fbb8-hckjk 806m 476Mi
+top backend-58b899fbb8-jbzrv 1105m 463Mi
+top backend-58b899fbb8-kzc4n 933m 466Mi
+top backend-58b899fbb8-x5q65 1099m 466Mi
+top kafka-0 60m 548Mi
+top kafka-ui-7c7db7d74f-t7rds 3m 242Mi
+top postgres-0 461m 265Mi
+top redis-5cf7b4cb46-kfpnl 114m 12Mi
+top web-6ccc8fd66c-9pkkn 1m 10Mi
+top web-6ccc8fd66c-dgbtp 1m 10Mi
+node k3d-scale-agent-0 25% 23%
+node k3d-scale-agent-1 15% 16%
+node k3d-scale-server-0 20% 30%
+hpa 6 6
+restarts 0
+pg 590703 9 1311 35521640 38323668 16552296 716219 0 61 1
+outbox 0
+redis hits=753211 misses=67034 evicted=0 ops=0 mem=1224152
+be backend-58b899fbb8-8bksz hik_active=0 hik_pending=0 hik_max=10 heap=66485912 gc_cnt=218 gc_sum=2.0950 proc_cpu=0.001 threads=38 http_cnt=37042 http_sum=696.1556 http_max=0.7899
+be backend-58b899fbb8-9lcwx hik_active=0 hik_pending=0 hik_max=10 heap=64591472 gc_cnt=242 gc_sum=2.0390 proc_cpu=0.001 threads=39 http_cnt=46833 http_sum=651.1413 http_max=0.2357
+be backend-58b899fbb8-hckjk hik_active=0 hik_pending=0 hik_max=10 heap=90054728 gc_cnt=233 gc_sum=2.2970 proc_cpu=0.001 threads=38 http_cnt=46839 http_sum=808.5250 http_max=0.2354
+be backend-58b899fbb8-jbzrv hik_active=0 hik_pending=0 hik_max=10 heap=87022136 gc_cnt=247 gc_sum=2.0020 proc_cpu=0.002 threads=38 http_cnt=46835 http_sum=650.1179 http_max=0.2523
+be backend-58b899fbb8-kzc4n hik_active=0 hik_pending=0 hik_max=10 heap=72705824 gc_cnt=180 gc_sum=2.1050 proc_cpu=0.001 threads=38 http_cnt=36786 http_sum=778.2691 http_max=1.6117
+be backend-58b899fbb8-x5q65 hik_active=0 hik_pending=0 hik_max=10 heap=83967736 gc_cnt=206 gc_sum=2.0430 proc_cpu=0.004 threads=38 http_cnt=37042 http_sum=816.1306 http_max=1.4703

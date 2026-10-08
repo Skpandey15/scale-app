@@ -1,0 +1,41 @@
+# Nightly rollup. Same image as the API, started in batch mode; Job retries resume from the DB checkpoint.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: daily-stats
+  namespace: scale
+spec:
+  schedule: "0 2 * * *"
+  concurrencyPolicy: Forbid          # never two runs at once
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 3
+      activeDeadlineSeconds: 1800
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: batch
+              image: scale-backend:1.0
+              imagePullPolicy: IfNotPresent
+              args:
+                - --app.batch.job=daily-stats
+                - --spring.kafka.listener.auto-startup=false
+                - --app.outbox.relay.enabled=false
+              env:
+                - { name: DB_URL, value: "jdbc:postgresql://scale-pg-pooler-rw:5432/app?prepareThreshold=0" }
+                - { name: FLYWAY_URL, value: "jdbc:postgresql://scale-pg-rw:5432/app" }
+                - name: DB_USER
+                  valueFrom: { secretKeyRef: { name: scale-pg-app, key: username } }
+                - name: DB_PASSWORD
+                  valueFrom: { secretKeyRef: { name: scale-pg-app, key: password } }
+                - { name: KAFKA_TOPIC_REPLICAS, value: "3" }
+                - name: JWT_SECRET
+                  valueFrom: { secretKeyRef: { name: app-secrets, key: JWT_SECRET } }
+                - { name: REDIS_HOST, value: redis }
+                - { name: KAFKA_BOOTSTRAP, value: "kafka.scale.svc.cluster.local:9092" }
+              resources:
+                requests: { cpu: 100m, memory: 256Mi }
+                limits: { memory: 512Mi }

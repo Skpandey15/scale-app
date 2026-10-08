@@ -1,0 +1,92 @@
+# S3-compatible object store (SeaweedFS) for Postgres base backups + WAL. MinIO's public images were withdrawn.
+# In a real deployment point barmanObjectStore at cloud object storage in another zone/region; this one shares
+# the cluster's failure domain, so ops/offsite-backup.sh copies backups out to the host disk.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: seaweedfs-data
+  namespace: scale
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources: { requests: { storage: 5Gi } }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seaweedfs
+  namespace: scale
+spec:
+  replicas: 1
+  strategy: { type: Recreate }
+  selector:
+    matchLabels: { app: seaweedfs }
+  template:
+    metadata:
+      labels: { app: seaweedfs }
+    spec:
+      enableServiceLinks: false
+      containers:
+        - name: seaweedfs
+          image: chrislusf/seaweedfs:latest
+          args:
+            - server
+            - -dir=/data
+            - -filer
+            - -s3
+            - -s3.port=8333
+            - -s3.config=/etc/s3/s3.json
+            - -master.volumeSizeLimitMB=256
+            - -volume.max=30
+          ports:
+            - { name: s3, containerPort: 8333 }
+            - { name: master, containerPort: 9333 }
+          readinessProbe:
+            tcpSocket: { port: 8333 }
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          resources:
+            requests: { cpu: 100m, memory: 192Mi }
+            limits: { memory: 512Mi }
+          volumeMounts:
+            - { name: data, mountPath: /data }
+            - { name: s3conf, mountPath: /etc/s3, readOnly: true }
+      volumes:
+        - name: data
+          persistentVolumeClaim: { claimName: seaweedfs-data }
+        - name: s3conf
+          secret: { secretName: seaweedfs-s3-config }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seaweedfs
+  namespace: scale
+spec:
+  selector: { app: seaweedfs }
+  ports:
+    - { name: s3, port: 8333 }
+    - { name: master, port: 9333 }
+    - { name: master-grpc, port: 19333 }   # `weed shell` talks gRPC (HTTP port + 10000)
+    - { name: filer, port: 8888 }          # read-only use by ops/offsite-backup.sh via port-forward; never exposed by an Ingress
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: seaweedfs-create-bucket
+  namespace: scale
+spec:
+  backoffLimit: 20
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: create
+          image: chrislusf/seaweedfs:latest
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              sleep 5
+              out=$(echo "s3.bucket.create -name pg-backups" | weed shell -master=seaweedfs.scale.svc.cluster.local:9333 2>&1)
+              echo "$out"
+              # idempotent: creating a bucket that already exists is success
+              echo "$out" | grep -qE "create bucket|already exists"

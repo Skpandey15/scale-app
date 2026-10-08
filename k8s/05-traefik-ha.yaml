@@ -1,0 +1,10 @@
+# k3s ships Traefik as a single pod: killing it took the whole site down for ~10s in the chaos drill.
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    deployment:
+      replicas: 2

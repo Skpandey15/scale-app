@@ -1,0 +1,7 @@
+# Shell scripts and manifests must keep LF endings even when committed from Windows.
+*.sh   text eol=lf
+*.py   text eol=lf
+*.yaml text eol=lf
+*.yml  text eol=lf
+*.sql  text eol=lf
+*.jmx  text eol=lf

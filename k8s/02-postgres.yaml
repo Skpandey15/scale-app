@@ -1,0 +1,73 @@
+# Highly available Postgres via CloudNativePG: 1 primary + 1 streaming replica, automatic failover, a transaction-mode
+# PgBouncer in front, continuous WAL archiving + daily base backups to the object store (point-in-time recovery).
+# Operator: kubectl apply --server-side -f https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v1.30.1/cnpg-1.30.1.yaml
+# Note: spec.backup.barmanObjectStore is the operator's native integration, deprecated in favour of the Barman Cloud plugin.
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: scale-pg
+  namespace: scale
+spec:
+  instances: 2
+  imageName: ghcr.io/cloudnative-pg/postgresql:16
+  primaryUpdateStrategy: unsupervised
+  storage:
+    size: 3Gi
+  resources:
+    requests: { cpu: 200m, memory: 384Mi }
+    limits: { memory: 768Mi }
+  postgresql:
+    parameters:
+      max_connections: "200"
+      shared_buffers: "128MB"
+      archive_timeout: "60s"            # WAL is archived at least every minute: RPO of about a minute for total loss
+  bootstrap:
+    initdb:
+      database: app
+      owner: app
+  affinity:
+    enablePodAntiAffinity: true         # primary and replica on different nodes when possible
+    topologyKey: kubernetes.io/hostname
+    podAntiAffinityType: preferred
+  backup:
+    retentionPolicy: "7d"
+    barmanObjectStore:
+      destinationPath: s3://pg-backups/
+      endpointURL: http://seaweedfs.scale.svc.cluster.local:8333
+      s3Credentials:
+        accessKeyId: { name: backup-s3, key: ACCESS_KEY_ID }
+        secretAccessKey: { name: backup-s3, key: ACCESS_SECRET_KEY }
+      wal: { compression: gzip }
+      data: { compression: gzip }
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Pooler
+metadata:
+  name: scale-pg-pooler-rw
+  namespace: scale
+spec:
+  cluster: { name: scale-pg }
+  instances: 2
+  type: rw
+  pgbouncer:
+    poolMode: transaction               # app pods share a small, fixed set of server connections
+    parameters:
+      max_client_conn: "1000"
+      default_pool_size: "25"
+      # Failover tuning (found by the failover drill): by default a failed server login is cached for 15s and
+      # connects can hang for 15s, which stretched a ~20s promotion into a ~48s write outage.
+      server_login_retry: "1"
+      server_connect_timeout: "3"
+      query_wait_timeout: "5"
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: scale-pg-daily
+  namespace: scale
+spec:
+  schedule: "0 0 2 * * *"               # six fields (seconds first): 02:00 daily; WAL archiving covers the time in between
+  cluster: { name: scale-pg }
+  method: barmanObjectStore
+  immediate: true
+  backupOwnerReference: self

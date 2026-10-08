@@ -1,0 +1,161 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: scale
+spec:
+  replicas: 3
+  selector:
+    matchLabels: { app: backend }
+  template:
+    metadata:
+      labels: { app: backend }
+    spec:
+      terminationGracePeriodSeconds: 40
+      topologySpreadConstraints:       # spread replicas across the 2 agents
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels: { app: backend }
+      containers:
+        - name: backend
+          image: scale-backend:1.0
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 8080 }]
+          env:
+            # App traffic goes through PgBouncer (transaction pooling, so prepared statements are client-side only);
+            # Flyway migrations go straight to the primary because they use session-level locks.
+            - { name: DB_URL, value: "jdbc:postgresql://scale-pg-pooler-rw:5432/app?prepareThreshold=0" }
+            - { name: FLYWAY_URL, value: "jdbc:postgresql://scale-pg-rw:5432/app" }
+            - name: DB_USER
+              valueFrom: { secretKeyRef: { name: scale-pg-app, key: username } }
+            - name: DB_PASSWORD
+              valueFrom: { secretKeyRef: { name: scale-pg-app, key: password } }
+            - { name: KAFKA_TOPIC_REPLICAS, value: "3" }
+            - { name: JAVA_TOOL_OPTIONS, value: "-XX:+UseG1GC" }   # the small container otherwise defaults to Serial GC
+            - name: JWT_SECRET
+              valueFrom: { secretKeyRef: { name: app-secrets, key: JWT_SECRET } }
+            - { name: REDIS_HOST, value: redis }
+            - { name: KAFKA_BOOTSTRAP, value: "kafka.scale.svc.cluster.local:9092" }
+          # Probes use the liveness/readiness GROUPS, which exclude Redis/Kafka: a soft-dependency outage
+          # must degrade features, not pull every pod out of the Service (found by the chaos drill).
+          startupProbe:
+            httpGet: { path: /actuator/health/liveness, port: 8080 }
+            periodSeconds: 5
+            failureThreshold: 30
+          readinessProbe:
+            httpGet: { path: /actuator/health/readiness, port: 8080 }
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: { path: /actuator/health/liveness, port: 8080 }
+            periodSeconds: 10
+            failureThreshold: 6
+          lifecycle:
+            preStop:                      # let endpoints/ingress drop this pod before it stops accepting traffic
+              exec: { command: ["sleep", "8"] }
+          resources:
+            requests: { cpu: 200m, memory: 384Mi }
+            limits: { memory: 640Mi }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: scale
+spec:
+  selector: { app: backend }
+  ports: [{ port: 8080 }]
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: backend
+  namespace: scale
+spec:
+  minAvailable: 2                      # node drains can never take the API below 2 pods
+  selector:
+    matchLabels: { app: backend }
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: web
+  namespace: scale
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels: { app: web }
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: backend
+  namespace: scale
+spec:
+  scaleTargetRef: { apiVersion: apps/v1, kind: Deployment, name: backend }
+  minReplicas: 3
+  maxReplicas: 10                       # was 6; safe now that PgBouncer caps real DB connections
+  metrics:
+    - type: Resource
+      resource: { name: cpu, target: { type: Utilization, averageUtilization: 70 } }
+  behavior:
+    scaleUp:                            # react fast: measured scale-out used to take 1-2 minutes
+      stabilizationWindowSeconds: 0
+      selectPolicy: Max
+      policies:
+        - { type: Percent, value: 100, periodSeconds: 15 }
+        - { type: Pods, value: 4, periodSeconds: 15 }
+    scaleDown:
+      stabilizationWindowSeconds: 300
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: scale
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: web }
+  template:
+    metadata:
+      labels: { app: web }
+    spec:
+      containers:
+        - name: web
+          image: scale-web:1.0
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 80 }]
+          readinessProbe:
+            httpGet: { path: /, port: 80 }
+          resources:
+            requests: { cpu: 20m, memory: 16Mi }
+            limits: { memory: 64Mi }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  namespace: scale
+spec:
+  selector: { app: web }
+  ports: [{ port: 80 }]
+---
+# Traefik (bundled with k3s) is the ingress controller; the k3d load balancer maps host :8088 -> :80.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: scale
+  namespace: scale
+spec:
+  ingressClassName: traefik
+  rules:
+    - http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend: { service: { name: backend, port: { number: 8080 } } }
+          - path: /
+            pathType: Prefix
+            backend: { service: { name: web, port: { number: 80 } } }
