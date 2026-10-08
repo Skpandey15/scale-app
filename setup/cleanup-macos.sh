@@ -4,7 +4,7 @@
 #   bash setup/cleanup-macos.sh [options]
 #
 #   (default)         delete the k3d cluster "scale" (ALL its data: Postgres, Kafka, in-cluster backups) and the
-#                     scale-backend / scale-web Docker images
+#                     scale-backend / scale-web / scale-catalog Docker images
 #   --include-backups also delete the off-cluster backup copy (~/scale-app-offsite-backups)
 #   --remove-tools    also uninstall the Homebrew packages / Colima VM that install-macos.sh added (recorded in
 #                     ~/.scale-app-setup-state). Anything you had installed before is left alone.
@@ -37,7 +37,7 @@ BACKUP_DIR="${SCALE_OFFSITE_DIR:-$HOME/scale-app-offsite-backups}"
 
 step "What this will do"
 echo "    - delete the k3d cluster 'scale' and ALL data in it (Postgres, Kafka, in-cluster backups)"
-echo "    - delete the scale-backend and scale-web Docker images"
+echo "    - delete the scale-backend, scale-web and scale-catalog Docker images"
 [ "$INCLUDE_BACKUPS" = 1 ] && echo "    - delete the off-cluster backup copy at $BACKUP_DIR"
 [ "$REMOVE_TOOLS" = 1 ] && echo "    - uninstall the tools the installer added$([ "$FORCE" = 1 ] && echo ' (and, with --force, ones it did not)')"
 confirm "Continue?" || { echo "Aborted."; exit 0; }
@@ -49,7 +49,7 @@ step "Removing the cluster and images"
 if docker_ready; then
   if cluster_exists scale; then run k3d cluster delete scale; done_ok "cluster deleted"; state_remove CLUSTER_CREATED scale
   else skip "no cluster named scale"; fi
-  for img in scale-backend:1.0 scale-web:1.0; do
+  for img in scale-backend:1.0 scale-web:1.0 scale-catalog:1.0; do
     if docker image inspect "$img" >/dev/null 2>&1; then run_quiet docker rmi -f "$img"; done_ok "removed image $img"
     else skip "image $img not present"; fi
   done

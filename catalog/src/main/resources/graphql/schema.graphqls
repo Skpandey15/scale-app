@@ -1,0 +1,26 @@
+type Query {
+  "One title by its canonical id, e.g. movie:thematrix:1999"
+  title(id: ID!): Title
+  "Full-text search over name and description. Cursor pagination: pass nextCursor as 'after'. 'first' is capped at 50."
+  searchTitles(q: String!, first: Int = 20, after: ID): TitlePage!
+}
+
+type Title {
+  id: ID!
+  type: String!
+  name: String!
+  year: Int
+  genres: [String!]!
+  description: String
+  "Which feeds contributed to this record"
+  sources: [String!]!
+  "Grows with the number of independent sources that agree (50 + 20 per source, max 100)"
+  confidence: Int!
+  "True when served from the stale cache because the database is unavailable"
+  stale: Boolean!
+}
+
+type TitlePage {
+  items: [Title!]!
+  nextCursor: ID
+}

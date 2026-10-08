@@ -4,8 +4,8 @@
 
 .DESCRIPTION
   Layers, from least to most destructive:
-    (default)          delete the k3d cluster "scale" (ALL its data: Postgres, Kafka, backups in the cluster) and the
-                       scale-backend / scale-web images.
+    (default)          delete the k3d cluster "scale" (ALL its data: Postgres, Mongo, Kafka, backups in the cluster) and the
+                       scale-backend / scale-web / scale-catalog images.
     -RemoveBackups     also delete the off-cluster backup copy (~/scale-app-offsite-backups inside WSL).
     -RemoveTools       also uninstall Docker Engine / k3d / kubectl, but ONLY those the installer added
                        (recorded in /var/lib/scale-app-setup inside WSL). Use -Force for tools it did not add.
@@ -42,7 +42,7 @@ if ($DryRun) { Write-Host 'DRY RUN: nothing will be changed.' -ForegroundColor M
 
 Write-Step 'What this will do'
 Write-Host "    - delete the k3d cluster 'scale' and ALL data in it (Postgres, Kafka, in-cluster backups)"
-Write-Host '    - delete the scale-backend and scale-web Docker images'
+Write-Host '    - delete the scale-backend, scale-web and scale-catalog Docker images'
 if ($RemoveBackups)     { Write-Host '    - delete the off-cluster backup copy (~/scale-app-offsite-backups in WSL)' }
 if ($RemoveTools)       { Write-Host '    - uninstall Docker Engine / k3d / kubectl that the installer added' }
 if ($RemoveWsl)         { Write-Host "    - UNREGISTER $Distro (deletes everything inside it)" -ForegroundColor Yellow }
@@ -69,7 +69,7 @@ if command -v k3d >/dev/null 2>&1 && k3d cluster list --no-headers 2>/dev/null |
 else
   echo "[skip] no cluster named scale"
 fi
-for img in scale-backend:1.0 scale-web:1.0; do
+for img in scale-backend:1.0 scale-web:1.0 scale-catalog:1.0; do
   if docker image inspect "$img" >/dev/null 2>&1; then docker rmi -f "$img" >/dev/null && echo "[ok] removed image $img"; else echo "[skip] image $img not present"; fi
 done
 '@
@@ -80,7 +80,7 @@ BK="${SCALE_OFFSITE_DIR:-$HOME/scale-app-offsite-backups}"
 if [ -d "$BK" ]; then rm -rf -- "$BK" && echo "[ok] removed $BK"; else echo "[skip] no backup copy at $BK"; fi
 '@
     }
-    $what = 'delete the k3d cluster and the scale-backend/scale-web images'
+    $what = 'delete the k3d cluster and the scale-backend/scale-web/scale-catalog images'
     if ($RemoveBackups) { $what += ' and the off-cluster backup copy' }
     $null = Invoke-WslBash -User $user -Script $app -Describe $what
 

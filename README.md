@@ -57,6 +57,7 @@ bash ops/offsite-backup.sh [dir]  # copy Postgres backups + WAL out of the clust
 |---|---|
 | `backend/` | Spring Boot API, Flyway migrations, outbox relay, batch job |
 | `frontend/` | React (Vite) UI served by nginx |
+| `catalog/` | Second service: media-metadata catalog (MongoDB, GraphQL + REST, Kafka entity resolution, Kafka Streams, circuit breaker); see [catalog/README.md](catalog/README.md) |
 | `k8s/` | Manifests, applied in order by `ops/deploy.sh` (Traefik HA, Redis, Kafka, object store, Postgres, app, Kafka UI, batch) |
 | `setup/` | Install + cleanup scripts for Windows (PowerShell/WSL2) and macOS (bash/Homebrew) |
 | `ops/` | Deploy, drills, metric collection and analysis scripts |

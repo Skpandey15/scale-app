@@ -9,7 +9,8 @@ CNPG_VERSION=1.30.1
 
 docker build -q -t scale-backend:1.0 backend
 docker build -q -t scale-web:1.0 frontend
-k3d image import scale-backend:1.0 scale-web:1.0 -c scale >/dev/null 2>&1
+docker build -q -t scale-catalog:1.0 catalog
+k3d image import scale-backend:1.0 scale-web:1.0 scale-catalog:1.0 -c scale >/dev/null 2>&1
 
 # Postgres operator (once). Pinned: its native Barman backup integration is removed in 1.31.
 if ! kubectl get crd clusters.postgresql.cnpg.io >/dev/null 2>&1; then
@@ -23,8 +24,12 @@ kubectl apply -f k8s/02-postgres.yaml 2>&1 | grep -v -E "unchanged|Warning|depre
 $K rollout status sts/kafka --timeout=600s
 $K wait --for=condition=Ready cluster/scale-pg --timeout=900s >/dev/null
 kubectl apply -f k8s/10-app.yaml -f k8s/20-kafka-ui.yaml -f k8s/30-batch.yaml
-$K rollout restart deploy/backend deploy/kafka-ui >/dev/null    # pick up freshly imported images / new secrets
+kubectl apply -f k8s/40-mongo.yaml
+$K rollout status sts/mongo --timeout=300s
+kubectl apply -f k8s/50-catalog.yaml
+$K rollout restart deploy/backend deploy/kafka-ui deploy/catalog >/dev/null    # pick up freshly imported images / new secrets
 $K rollout status deploy/backend --timeout=600s
+$K rollout status deploy/catalog --timeout=600s
 kubectl -n kube-system rollout status deploy/traefik --timeout=180s
 $K get pods -o wide --no-headers | awk '{print $1, $2, $3, $7}'
 echo

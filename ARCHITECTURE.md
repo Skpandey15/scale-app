@@ -35,6 +35,13 @@ Backup: continuous WAL + daily base backups -> object store (SeaweedFS) -> copie
 * One Kafka broker killed: 0 failed requests, 0 lost events. One PgBouncer pod killed: about 4 s of errors.
 * Point-in-time recovery restored exactly to a chosen instant in about 40 s (tiny dataset).
 
+## Second service: catalog (MongoDB + GraphQL + Kafka Streams), see `catalog/README.md`
+
+Curated media-metadata service: feeds -> Kafka -> entity-resolution merge -> MongoDB, read through REST and GraphQL behind
+Redis and a circuit breaker with a stale-cache fallback; a Kafka Streams job counts ingests per source per minute.
+Drilled: 15 records -> 8 titles, idempotent replay (no writes), poison records to a DLT, Mongo outage (stale reads, fast 503s,
+writes buffered in Kafka and applied on recovery, none lost). Mongo is single-node (RAM).
+
 ## Known limits (be upfront about these)
 
 * One laptop: three "nodes" share the same CPU, RAM and disk; the cluster's failure domain is the machine.

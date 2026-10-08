@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog
+  namespace: scale
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: catalog }
+  template:
+    metadata:
+      labels: { app: catalog }
+    spec:
+      terminationGracePeriodSeconds: 40
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels: { app: catalog }
+      containers:
+        - name: catalog
+          image: scale-catalog:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - { name: http, containerPort: 8080 }
+            - { name: management, containerPort: 8081 }     # actuator: not exposed by the Service or the Ingress
+          env:
+            - name: MONGO_APP_PASSWORD
+              valueFrom: { secretKeyRef: { name: catalog-secrets, key: MONGO_APP_PASSWORD } }
+            # Short timeouts so a dead Mongo is detected in ~1 s and the circuit breaker can open quickly.
+            - name: MONGO_URI
+              value: "mongodb://catalog:$(MONGO_APP_PASSWORD)@mongo:27017/catalog?authSource=catalog&serverSelectionTimeoutMS=1000&connectTimeoutMS=1000&socketTimeoutMS=2000"
+            - name: CATALOG_API_KEY
+              valueFrom: { secretKeyRef: { name: catalog-secrets, key: CATALOG_API_KEY } }
+            - { name: REDIS_HOST, value: redis }
+            - { name: KAFKA_BOOTSTRAP, value: "kafka.scale.svc.cluster.local:9092" }
+            - { name: KAFKA_TOPIC_REPLICAS, value: "3" }
+          startupProbe:
+            httpGet: { path: /actuator/health/liveness, port: 8081 }
+            periodSeconds: 5
+            failureThreshold: 40
+          readinessProbe:
+            httpGet: { path: /actuator/health/readiness, port: 8081 }
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: { path: /actuator/health/liveness, port: 8081 }
+            periodSeconds: 10
+            failureThreshold: 6
+          lifecycle:
+            preStop:
+              exec: { command: ["sleep", "8"] }
+          resources:
+            requests: { cpu: 150m, memory: 320Mi }
+            limits: { memory: 576Mi }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog
+  namespace: scale
+spec:
+  selector: { app: catalog }
+  ports: [{ name: http, port: 8080 }]      # port 8081 deliberately not published
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: catalog
+  namespace: scale
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels: { app: catalog }
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: catalog
+  namespace: scale
+spec:
+  ingressClassName: traefik
+  rules:
+    - http:
+        paths:
+          - path: /catalog
+            pathType: Prefix
+            backend: { service: { name: catalog, port: { number: 8080 } } }
