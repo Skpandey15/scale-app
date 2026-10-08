@@ -8,17 +8,31 @@ point-in-time recovery), sliding-window rate limiting, a restartable batch job, 
 * Architecture, measured behaviour and honest limits: [ARCHITECTURE.md](ARCHITECTURE.md)
 * Load-test results: [loadtest/PERF_FINDINGS.md](loadtest/PERF_FINDINGS.md) (tables in `loadtest/PERF_REPORT*.md`)
 
-## Quick start on macOS
+## Quick start (one script per platform)
 
-You need roughly **8 GB of RAM given to Docker** (10 GB is comfortable) and 4+ CPUs; the full stack runs ~15 pods.
+You need roughly **8 GB of RAM given to Docker/WSL** (16 GB machine recommended) and 4+ CPUs; the full stack runs ~15 pods.
+Both installers are re-runnable, support a dry run, and have a matching cleanup script: see [setup/README.md](setup/README.md).
+
+```bash
+# macOS (Homebrew + Colima by default)
+git clone https://github.com/Skpandey15/scale-app.git && cd scale-app
+bash setup/install-macos.sh --dry-run     # preview, then run again without --dry-run
+```
+```powershell
+# Windows 10/11 (WSL2 + Docker Engine inside WSL)
+powershell -ExecutionPolicy Bypass -File setup\install-windows.ps1 -DryRun    # preview, then run without -DryRun
+```
+Remove everything again with `setup/cleanup-macos.sh` / `setup\cleanup-windows.ps1` (both take `--dry-run` / `-DryRun`).
+
+<details><summary>Manual steps (what the installers automate)</summary>
 
 ```bash
 brew install k3d kubectl                       # plus Docker Desktop, or:  brew install colima docker && colima start --cpu 4 --memory 10
-git clone <this repo> && cd scale-app
 k3d cluster create scale --servers 1 --agents 2 -p "8088:80@loadbalancer"
-bash ops/deploy.sh                             # builds images, installs the Postgres operator, deploys everything (first run: 10-15 min)
+bash ops/deploy.sh                             # builds images, installs the Postgres operator, deploys everything (first run: 10-20 min)
 open http://localhost:8088
 ```
+</details>
 
 * App: http://localhost:8088  (register, post, scroll the feed)
 * Kafka UI: http://localhost:8088/kafka-ui  (user `admin`; password: `kubectl -n scale get secret kafka-ui-auth -o jsonpath='{.data.password}' | base64 --decode`)
@@ -44,6 +58,7 @@ bash ops/offsite-backup.sh [dir]  # copy Postgres backups + WAL out of the clust
 | `backend/` | Spring Boot API, Flyway migrations, outbox relay, batch job |
 | `frontend/` | React (Vite) UI served by nginx |
 | `k8s/` | Manifests, applied in order by `ops/deploy.sh` (Traefik HA, Redis, Kafka, object store, Postgres, app, Kafka UI, batch) |
+| `setup/` | Install + cleanup scripts for Windows (PowerShell/WSL2) and macOS (bash/Homebrew) |
 | `ops/` | Deploy, drills, metric collection and analysis scripts |
 | `loadtest/` | JMeter plan (`scale.jmx`), k6 script, reports and raw metric samples |
 | `docker-compose.yml` | Legacy single-node dev stack (no Kafka/HA): use `k8s/` instead |
