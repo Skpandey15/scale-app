@@ -13,7 +13,7 @@ fi
 
 if ! $K get secret kafka-ui-auth >/dev/null 2>&1; then
   $K create secret generic kafka-ui-auth --from-literal=username=admin --from-literal=password="$(rand 24)" >/dev/null
-  echo "created kafka-ui-auth (read the password with: kubectl -n scale get secret kafka-ui-auth -o jsonpath='{.data.password}' | base64 -d)"
+  echo "created kafka-ui-auth (read the password with: kubectl -n scale get secret kafka-ui-auth -o jsonpath='{.data.password}' | base64 --decode)"
 fi
 
 if ! $K get secret backup-s3 >/dev/null 2>&1; then
