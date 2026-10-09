@@ -75,8 +75,10 @@ function Invoke-WslBash {
     $tmp = Join-Path $env:TEMP ('scale-setup-' + [guid]::NewGuid().ToString('N') + '.sh')
     [IO.File]::WriteAllText($tmp, ($Script -replace "`r`n", "`n"), (New-Object System.Text.UTF8Encoding $false))
     try {
-        & wsl.exe -d $script:Distro -u $User -- bash (Convert-ToWslPath $tmp)
-        return $LASTEXITCODE
+        # Out-Host streams the script's output to the console. Without it the output becomes part of this function's
+        # return value, hides itself, and `$code -ne 0` is then true for any array (found when testing lab-start).
+        & wsl.exe -d $script:Distro -u $User -- bash (Convert-ToWslPath $tmp) | Out-Host
+        return [int]$LASTEXITCODE
     } finally {
         Remove-Item -LiteralPath $tmp -Force -ErrorAction SilentlyContinue
     }

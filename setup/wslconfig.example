@@ -1,0 +1,12 @@
+# Example %UserProfile%\.wslconfig for a 16 GB / 6-core desktop that also runs Windows apps.
+# Copy to C:\Users\<you>\.wslconfig, then run `wsl --shutdown`. Adjust after a RAM upgrade (e.g. memory=16GB on 32 GB).
+[wsl2]
+memory=6GB          # full lab = ~4.5 GB of processes + cache; 7 GB let Linux hoard cache and left Windows only ~0.8 GB free
+processors=8        # leave a few logical CPUs for Windows so the desktop stays responsive
+swap=1GB            # small on purpose: heavy swapping on an SSD freezes the whole PC; better to fail fast
+
+[experimental]
+autoMemoryReclaim=gradual   # hand cached memory back to Windows slowly when WSL is idle
+
+[general]
+instanceIdleTimeout=-1   # never auto-stop the distro (it would kill the cluster ~15 s after the last terminal closes); use lab-stop.ps1
